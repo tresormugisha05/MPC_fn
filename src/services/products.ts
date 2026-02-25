@@ -31,7 +31,17 @@ export async function getStock(productId: string): Promise<number> {
   }
 }
 
-export async function addProduct(product: Omit<Product, 'id'>): Promise<Product> {
+// Extended product type that includes owner_id for creating products
+interface CreateProductInput {
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  image_url?: string;
+  owner_id: string;
+}
+
+export async function addProduct(product: CreateProductInput): Promise<Product> {
   try {
     const response = await api.post('/products', product);
     return response.data;

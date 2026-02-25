@@ -146,7 +146,7 @@ export function ProductDetailPage() {
               {/* Product Image */}
               <div className="md:w-1/2">
                 <img
-                  src={product.imageUrl}
+                  src={product.image_url || '/placeholder.jpg'}
                   alt={product.name}
                   className={`w-full h-96 md:h-full object-cover ${isSoldOut ? 'grayscale opacity-50' : ''}`}
                 />

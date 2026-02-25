@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '../../types/product';
 import { Badge } from '../ui/Badge';
@@ -63,7 +63,7 @@ export function ProductCard({
     >
       <div className="relative" onClick={handleClick}>
         <img
-          src={product.imageUrl}
+          src={product.image_url || '/placeholder.jpg'}
           alt={product.name}
           className={`w-full h-64 object-cover ${isSoldOut ? 'grayscale opacity-50' : ''}`}
         />

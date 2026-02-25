@@ -10,7 +10,10 @@ export const mockProducts: Product[] = [
     description: 'Exclusive collaborative sneaker design with premium materials. Only 100 pairs made worldwide.',
     price: 299.99,
     stock: 15,
-    imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=400&fit=crop'
+    image_url: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=400&fit=crop',
+    is_active: true,
+    created_at: new Date().toISOString(),
+    owner_id: 'cbb5c471-f58c-4aff-8dfc-2f0b7b2027ed'
   },
   {
     id: '2',
@@ -18,7 +21,10 @@ export const mockProducts: Product[] = [
     description: 'Swiss-made automatic movement watch with sapphire crystal. Water resistant to 100m.',
     price: 599.99,
     stock: 8,
-    imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop'
+    image_url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop',
+    is_active: true,
+    created_at: new Date().toISOString(),
+    owner_id: 'cbb5c471-f58c-4aff-8dfc-2f0b7b2027ed'
   },
   {
     id: '3',
@@ -26,7 +32,10 @@ export const mockProducts: Product[] = [
     description: 'Handcrafted Italian leather messenger bag with brass hardware. Each piece is unique.',
     price: 449.99,
     stock: 5,
-    imageUrl: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&h=400&fit=crop'
+    image_url: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&h=400&fit=crop',
+    is_active: true,
+    created_at: new Date().toISOString(),
+    owner_id: 'cbb5c471-f58c-4aff-8dfc-2f0b7b2027ed'
   },
   {
     id: '4',
@@ -34,7 +43,10 @@ export const mockProducts: Product[] = [
     description: 'Premium noise-cancelling earbuds with 32-hour battery life and spatial audio.',
     price: 199.99,
     stock: 25,
-    imageUrl: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&h=400&fit=crop'
+    image_url: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&h=400&fit=crop',
+    is_active: true,
+    created_at: new Date().toISOString(),
+    owner_id: 'cbb5c471-f58c-4aff-8dfc-2f0b7b2027ed'
   },
   {
     id: '5',
@@ -42,7 +54,10 @@ export const mockProducts: Product[] = [
     description: 'Central control device for all your smart home devices. Voice control enabled.',
     price: 149.99,
     stock: 30,
-    imageUrl: 'https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=600&h=400&fit=crop'
+    image_url: 'https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=600&h=400&fit=crop',
+    is_active: true,
+    created_at: new Date().toISOString(),
+    owner_id: 'cbb5c471-f58c-4aff-8dfc-2f0b7b2027ed'
   },
   {
     id: '6',
@@ -50,7 +65,10 @@ export const mockProducts: Product[] = [
     description: 'Next-generation gaming console with 4K graphics and ray tracing support.',
     price: 499.99,
     stock: 3,
-    imageUrl: 'https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=600&h=400&fit=crop'
+    image_url: 'https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=600&h=400&fit=crop',
+    is_active: true,
+    created_at: new Date().toISOString(),
+    owner_id: 'cbb5c471-f58c-4aff-8dfc-2f0b7b2027ed'
   },
   {
     id: '7',
@@ -58,7 +76,10 @@ export const mockProducts: Product[] = [
     description: 'Custom mechanical keyboard with RGB lighting and hot-swappable switches.',
     price: 179.99,
     stock: 12,
-    imageUrl: 'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=600&h=400&fit=crop'
+    image_url: 'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=600&h=400&fit=crop',
+    is_active: true,
+    created_at: new Date().toISOString(),
+    owner_id: 'cbb5c471-f58c-4aff-8dfc-2f0b7b2027ed'
   },
   {
     id: '8',
@@ -66,7 +87,10 @@ export const mockProducts: Product[] = [
     description: 'Waterproof action camera with stabilization and live streaming capability.',
     price: 349.99,
     stock: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&h=400&fit=crop'
+    image_url: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&h=400&fit=crop',
+    is_active: true,
+    created_at: new Date().toISOString(),
+    owner_id: 'cbb5c471-f58c-4aff-8dfc-2f0b7b2027ed'
   },
   {
     id: '9',
@@ -74,7 +98,10 @@ export const mockProducts: Product[] = [
     description: 'Over-ear headphones with active noise cancellation and 40-hour battery.',
     price: 349.99,
     stock: 18,
-    imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=400&fit=crop'
+    image_url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=400&fit=crop',
+    is_active: true,
+    created_at: new Date().toISOString(),
+    owner_id: 'cbb5c471-f58c-4aff-8dfc-2f0b7b2027ed'
   },
   {
     id: '10',
@@ -82,7 +109,10 @@ export const mockProducts: Product[] = [
     description: 'High-speed electric skateboard with regenerative braking. 15 mile range.',
     price: 399.99,
     stock: 7,
-    imageUrl: 'https://images.unsplash.com/photo-1547447134-cd3f5c716030?w=600&h=400&fit=crop'
+    image_url: 'https://images.unsplash.com/photo-1547447134-cd3f5c716030?w=600&h=400&fit=crop',
+    is_active: true,
+    created_at: new Date().toISOString(),
+    owner_id: 'cbb5c471-f58c-4aff-8dfc-2f0b7b2027ed'
   }
 ];
 

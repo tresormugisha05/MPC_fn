@@ -5,6 +5,9 @@ import { Footer } from '../components/layout/Footer';
 import { addProduct } from '../services/products';
 import { Spinner } from '../components/ui/Spinner';
 
+// Default admin user ID from the backend database
+const DEFAULT_OWNER_ID = 'cbb5c471-f58c-4aff-8dfc-2f0b7b2027ed';
+
 export function AddProductPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -34,16 +37,18 @@ export function AddProductPage() {
         description: formData.description,
         price: parseFloat(formData.price),
         stock: parseInt(formData.stock),
-        imageUrl: formData.imageUrl
+        image_url: formData.imageUrl,
+        owner_id: DEFAULT_OWNER_ID
       };
 
+      console.log('Submitting product data:', productData);
       await addProduct(productData);
       
       // Redirect to home page after successful product creation
       navigate('/');
-    } catch (err) {
-      setError('Failed to add product. Please try again.');
-      console.error(err);
+    } catch (err: any) {
+      setError('Failed to add product. Please try again. ' + (err.message || ''));
+      console.error('Error adding product:', err);
     } finally {
       setLoading(false);
     }

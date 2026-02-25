@@ -4,5 +4,8 @@ export interface Product {
   description: string;
   price: number;
   stock: number;
-  imageUrl: string;
+  image_url: string | null;
+  is_active: boolean;
+  created_at: string;
+  owner_id: string;
 }

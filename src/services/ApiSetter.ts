@@ -6,7 +6,7 @@ const api = axios.create({
     import.meta.env.VITE_APP_API_URL ||
     (window.location.hostname === "localhost"
       ? "http://localhost:5000"
-      : "https://your-production-api.com"),
+      : "https://mpc-bn.onrender.com"),
   timeout: 20000,
   headers: {
     "Content-Type": "application/json",
