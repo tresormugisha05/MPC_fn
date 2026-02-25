@@ -175,7 +175,7 @@ export function ProductDetailPage() {
                 </h1>
                 
                 <p className="text-4xl font-bold text-blue-600 mb-6">
-                  ${product.price.toFixed(2)}
+                  ${Number(product.price).toFixed(2)}
                 </p>
                 
                 <p className="text-gray-600 mb-6">

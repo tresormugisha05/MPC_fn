@@ -32,9 +32,9 @@ export function ProductCard({
   const isSoldOut = product.stock === 0;
   const isLimited = product.stock > 0 && product.stock <= 10;
   
-  // Handle undefined price safely
+  // Handle undefined price safely (Prisma returns Decimal as string)
   const formattedPrice = product.price !== undefined 
-    ? `$${product.price.toFixed(2)}` 
+    ? `$${Number(product.price).toFixed(2)}` 
     : '$0.00';
 
   const handleClick = () => {

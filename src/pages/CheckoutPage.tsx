@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
@@ -15,14 +15,14 @@ export function CheckoutPage() {
   const { reservationId } = useParams<{ reservationId: string }>();
   const navigate = useNavigate();
   
-const [reservation, setReservation] = useState<Reservation | null>(null);
+  const [reservation, setReservation] = useState<Reservation | null>(null);
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [processing, setProcessing] = useState(false);
   
-  // Calculate total price
-  const totalPrice = product ? product.price * (reservation?.quantity || 1) : 0;
+  // Calculate total price (Prisma returns Decimal as string)
+  const totalPrice = product ? Number(product.price) * (reservation?.quantity || 1) : 0;
   
   // Fetch reservation on mount
   useEffect(() => {
@@ -49,7 +49,7 @@ const [reservation, setReservation] = useState<Reservation | null>(null);
           return;
         }
         
-setReservation(data);
+        setReservation(data);
         setError(null);
         
         // Fetch product details using productId from reservation
@@ -177,7 +177,7 @@ setReservation(data);
                   </div>
                   <div className="flex justify-between border-t pt-3">
                     <span className="font-semibold">Total</span>
-                    <span className="font-bold text-blue-600">${totalPrice.toFixed(2)}</span>
+                    <span className="font-bold text-blue-600">${Number(totalPrice).toFixed(2)}</span>
                   </div>
                 </div>
               </div>
