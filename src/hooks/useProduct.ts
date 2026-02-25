@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Product } from '../types/product';
-import { getProduct } from '../api/products';
+import { getProduct } from '../services/products';
 
 interface UseProductResult {
   product: Product | null;

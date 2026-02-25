@@ -6,7 +6,7 @@ import { ProductCard } from '../components/product/ProductCard';
 import { Spinner } from '../components/ui/Spinner';
 import { ErrorMessage } from '../components/ui/ErrorMessage';
 import { CountdownTimer } from '../components/ui/CountdownTimer';
-import { getAllProducts } from '../api/products';
+import { getAllProducts } from '../services/products';
 import { useStockPolling } from '../hooks/useStockPolling';
 import { useReservation } from '../hooks/useReservation';
 import type { Product } from '../types/product';
@@ -29,7 +29,7 @@ import type { Product } from '../types/product';
   
   // Get stock polling for selected product
   useStockPolling(selectedProductId || '');
-  const { reservation, loading: reservationLoading, reserve } = useReservation();
+  const { reservation, reserve } = useReservation();
   
   const [reserved, setReserved] = useState(false);
   const [reservationTimer, setReservationTimer] = useState<string | null>(null);

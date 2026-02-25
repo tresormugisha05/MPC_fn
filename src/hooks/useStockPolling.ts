@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getProduct } from '../api/products';
+import { getProduct } from '../services/products';
 
 interface UseStockPollingResult {
   stock: number;

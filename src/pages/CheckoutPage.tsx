@@ -5,9 +5,9 @@ import { Footer } from '../components/layout/Footer';
 import { Spinner } from '../components/ui/Spinner';
 import { ErrorMessage } from '../components/ui/ErrorMessage';
 import { CountdownTimer } from '../components/ui/CountdownTimer';
-import { getReservation } from '../api/reservations';
-import { createOrder } from '../api/orders';
-import { getProduct } from '../api/products';
+import { getReservation } from '../services/reservations';
+import { createOrder } from '../services/orders';
+import { getProduct } from '../services/products';
 import type { Reservation } from '../types/reservation';
 import type { Product } from '../types/product';
 

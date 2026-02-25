@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 import type { Reservation } from '../types/reservation';
-import { createReservation } from '../api/reservations';
-
+import { createReservation } from '../services/reservations';
 interface UseReservationResult {
   reservation: Reservation | null;
   loading: boolean;

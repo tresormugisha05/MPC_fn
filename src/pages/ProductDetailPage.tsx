@@ -6,7 +6,7 @@ import { Spinner } from '../components/ui/Spinner';
 import { ErrorMessage } from '../components/ui/ErrorMessage';
 import { CountdownTimer } from '../components/ui/CountdownTimer';
 import { ReserveButton } from '../components/product/ReserveButton';
-import { getProduct } from '../api/products';
+import { getProduct } from '../services/products';
 import { useReservation } from '../hooks/useReservation';
 import { useAuth } from '../context/AuthContext';
 import type { Product } from '../types/product';

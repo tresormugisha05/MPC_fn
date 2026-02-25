@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
-import { addProduct } from '../api/products';
+import { addProduct } from '../services/products';
 import { Spinner } from '../components/ui/Spinner';
 
 export function AddProductPage() {

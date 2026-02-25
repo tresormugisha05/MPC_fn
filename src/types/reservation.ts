@@ -4,5 +4,5 @@ export interface Reservation {
   userId: string;
   quantity: number;
   expiresAt: string; // ISO date string from API
-  status: 'active' | 'expired' | 'completed';
+  status: 'pending' | 'completed' | 'expired' | 'cancelled';
 }
