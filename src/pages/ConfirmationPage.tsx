@@ -1,9 +1,44 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
+import { Spinner } from '../components/ui/Spinner';
+import { getOrder } from '../services/orders';
+import type { Order } from '../types/order';
 
 export function ConfirmationPage() {
   const { orderId } = useParams<{ orderId: string }>();
+  const [order, setOrder] = useState<Order | null>(null);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    async function fetchOrder() {
+      if (!orderId) return;
+      
+      try {
+        const data = await getOrder(orderId);
+        setOrder(data);
+      } catch (error) {
+        console.error('Error fetching order:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    fetchOrder();
+  }, [orderId]);
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-grow flex items-center justify-center">
+          <Spinner size="lg" />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -46,16 +81,16 @@ export function ConfirmationPage() {
               <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Limited Edition Item</span>
-                  <span className="font-medium">$99.00</span>
+                  <span className="text-gray-600">Product</span>
+                  <span className="font-medium">{order?.product?.name || 'Product'}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Quantity</span>
-                  <span className="font-medium">1</span>
+                  <span className="font-medium">{order?.quantity || 1}</span>
                 </div>
                 <div className="flex justify-between border-t pt-3">
                   <span className="font-semibold">Total</span>
-                  <span className="font-bold text-blue-600">$99.00</span>
+                  <span className="font-bold text-blue-600">${Number(order?.total_price || 0).toFixed(2)}</span>
                 </div>
               </div>
             </div>

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Spinner } from '../ui/Spinner';
 
 interface ReserveButtonProps {
@@ -19,27 +18,23 @@ export function ReserveButton({
   onLoginClick
 }: ReserveButtonProps) {
   
-  const [isClicked, setIsClicked] = useState(false);
-  
   const handleClick = () => {
     if (requireAuth && onLoginClick) {
       onLoginClick();
     } else if (!disabled && !loading) {
-      setIsClicked(true);
       onClick();
     }
   };
 
   const buttonText = requireAuth ? 'Login to Reserve' : 'Reserve Now';
-  const showLoading = loading || isClicked;
 
   return (
     <button
       onClick={handleClick}
-      disabled={disabled || showLoading}
+      disabled={disabled || loading}
       className={`
         relative w-full py-3 px-6 rounded-lg font-semibold text-white transition-all duration-200
-        ${disabled || showLoading
+        ${disabled || loading
           ? 'bg-gray-400 cursor-not-allowed'
           : requireAuth
             ? 'bg-orange-500 hover:bg-orange-600 active:bg-orange-700'
@@ -48,7 +43,7 @@ export function ReserveButton({
         ${className}
       `}
     >
-      {showLoading ? (
+      {loading ? (
         <span className="flex items-center justify-center gap-2">
           <Spinner size="sm" />
           Reserving...

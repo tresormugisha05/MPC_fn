@@ -24,25 +24,25 @@ export function Navbar() {
     return () => window.removeEventListener('openLoginModal', handleOpenLogin);
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError('');
-    const success = login(email, password);
-    if (success) {
+    const result = await login(email, password);
+    if (result.success) {
       setShowLogin(false);
       setEmail('');
       setPassword('');
     } else {
-      setLoginError('Invalid credentials');
+      setLoginError(result.error || 'Invalid credentials');
     }
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setRegisterError('');
     setRegisterSuccess(false);
-    const success = register(email, password, name);
-    if (success) {
+    const result = await register(email, password, name);
+    if (result.success) {
       setRegisterSuccess(true);
       setTimeout(() => {
         setShowRegister(false);
@@ -53,7 +53,7 @@ export function Navbar() {
         setRegisterSuccess(false);
       }, 1500);
     } else {
-      setRegisterError('Email already registered');
+      setRegisterError(result.error || 'Email already registered');
     }
   };
 

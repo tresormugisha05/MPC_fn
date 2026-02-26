@@ -3,10 +3,7 @@ import axios from "axios";
 // Create an Axios instance with default configuration
 const api = axios.create({
   baseURL:
-    import.meta.env.VITE_APP_API_URL ||
-    (window.location.hostname === "localhost"
-      ? "http://localhost:5000"
-      : "https://mpc-bn.onrender.com"),
+    import.meta.env.VITE_APP_API_URL || "https://mpc-bn.onrender.com",
   timeout: 20000,
   headers: {
     "Content-Type": "application/json",

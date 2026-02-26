@@ -31,14 +31,13 @@ export async function getStock(productId: string): Promise<number> {
   }
 }
 
-// Extended product type that includes owner_id for creating products
+// Extended product type for creating products
 interface CreateProductInput {
   name: string;
   description: string;
   price: number;
   stock: number;
   image_url?: string;
-  owner_id: string;
 }
 
 export async function addProduct(product: CreateProductInput): Promise<Product> {

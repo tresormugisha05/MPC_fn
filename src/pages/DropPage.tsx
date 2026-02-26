@@ -22,6 +22,9 @@ export function DropPage() {
   // Selected product for reservation
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   
+  // Track which product is currently being reserved (for loading state)
+  const [reservingId, setReservingId] = useState<string | null>(null);
+  
   // Handle login click from reserve button - dispatch event to open Navbar login
   const handleLoginClick = () => {
     window.dispatchEvent(new CustomEvent('openLoginModal'));
@@ -148,12 +151,22 @@ export function DropPage() {
                     navigate('/sold-out');
                     return;
                   }
-                  const result = await reserve(product.id);
-                  if (result) {
-                    navigate(`/checkout/${result.id}`);
+                  setReservingId(product.id);
+                  try {
+                    const result = await reserve(product.id);
+                    if (result) {
+                      navigate(`/checkout/${result.id}`);
+                    } else {
+                      throw new Error('Reservation failed');
+                    }
+                  } catch (err) {
+                    console.error('Reservation error:', err);
+                    alert(err instanceof Error ? err.message : 'Failed to reserve product');
+                  } finally {
+                    setReservingId(null);
                   }
                 }}
-                isReserving={false}
+                isReserving={reservingId === product.id}
                 isReserved={false}
                 onLoginClick={handleLoginClick}
               />

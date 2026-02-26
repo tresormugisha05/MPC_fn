@@ -1,22 +1,15 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { login as apiLogin, register as apiRegister } from '../services/auth';
 
 interface AuthContextType {
   isAdmin: boolean;
   isLoggedIn: boolean;
-  login: (email: string, password: string) => boolean;
-  register: (email: string, password: string, name: string) => boolean;
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  register: (email: string, password: string, name: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-const ADMIN_EMAIL = 'admin@gmail.com';
-const ADMIN_PASSWORD = 'admin123';
-
-interface User {
-  email: string;
-  name: string;
-}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -25,57 +18,62 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Check localStorage on mount
   useEffect(() => {
     const storedAdmin = localStorage.getItem('isAdmin');
+    const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('currentUser');
     
     if (storedAdmin === 'true') {
       setIsAdmin(true);
     }
     
-    if (storedUser) {
+    // Check for valid token and user
+    if (storedToken && storedUser) {
       setIsLoggedIn(true);
     }
   }, []);
 
-  const login = (email: string, password: string): boolean => {
-    // Check for admin login
-    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      setIsAdmin(true);
-      localStorage.setItem('isAdmin', 'true');
-      return true;
-    }
-    
-    // Check for regular user login from registered users
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-    const user = registeredUsers.find((u: User & { password: string }) => u.email === email && u.password === password);
-    
-    if (user) {
+  const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+    try {
+      // Always call backend API for login - verify credentials
+      const response = await apiLogin(email, password);
+      
+      // Store token and user info
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('currentUser', JSON.stringify(response.user));
+      
+      // Update state based on actual user role from backend
+      if (response.user.role === 'admin') {
+        setIsAdmin(true);
+        localStorage.setItem('isAdmin', 'true');
+      } else {
+        setIsAdmin(false);
+        localStorage.removeItem('isAdmin');
+      }
       setIsLoggedIn(true);
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      return true;
+      
+      return { success: true };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Login failed';
+      return { success: false, error: errorMessage };
     }
-    
-    return false;
   };
 
-  const register = (email: string, password: string, name: string): boolean => {
-    // Check if user already exists
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-    const existingUser = registeredUsers.find((u: User & { password: string }) => u.email === email);
-    
-    if (existingUser) {
-      return false;
+  const register = async (email: string, password: string, name: string): Promise<{ success: boolean; error?: string }> => {
+    try {
+      // Call backend API for registration
+      const response = await apiRegister(email, password, name);
+      
+      // Store token and user info
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('currentUser', JSON.stringify(response.user));
+      
+      // Update state
+      setIsLoggedIn(true);
+      
+      return { success: true };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Registration failed';
+      return { success: false, error: errorMessage };
     }
-    
-    // Add new user
-    const newUser = { email, password, name };
-    registeredUsers.push(newUser);
-    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-    
-    // Auto-login after registration
-    setIsLoggedIn(true);
-    localStorage.setItem('currentUser', JSON.stringify(newUser));
-    
-    return true;
   };
 
   const logout = () => {
@@ -83,6 +81,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoggedIn(false);
     localStorage.removeItem('isAdmin');
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
   };
 
   return (
