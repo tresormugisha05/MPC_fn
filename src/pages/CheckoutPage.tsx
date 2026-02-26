@@ -1,4 +1,4 @@
- import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
@@ -7,28 +7,41 @@ import { ErrorMessage } from '../components/ui/ErrorMessage';
 import { CountdownTimer } from '../components/ui/CountdownTimer';
 import { getReservation } from '../services/reservations';
 import { createOrder } from '../services/orders';
-import { getProduct } from '../services/products';
+import { useAuth } from '../context/AuthContext';
 import type { Reservation } from '../types/reservation';
-import type { Product } from '../types/product';
 
 export function CheckoutPage() {
   const { reservationId } = useParams<{ reservationId: string }>();
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
   
   const [reservation, setReservation] = useState<Reservation | null>(null);
-  const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [processing, setProcessing] = useState(false);
   
   // Calculate total price (Prisma returns Decimal as string)
-  const totalPrice = product ? Number(product.price) * (reservation?.quantity || 1) : 0;
+  const totalPrice = reservation?.product 
+    ? Number(reservation.product.price) * (reservation?.quantity || 1) 
+    : 0;
+  
+  // Check authentication on mount
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/');
+      return;
+    }
+  }, [isLoggedIn, navigate]);
   
   // Fetch reservation on mount
   useEffect(() => {
     if (!reservationId) {
       setError('Invalid reservation');
       setLoading(false);
+      return;
+    }
+    
+    if (!isLoggedIn) {
       return;
     }
     
@@ -51,14 +64,6 @@ export function CheckoutPage() {
         
         setReservation(data);
         setError(null);
-        
-        // Fetch product details using productId from reservation
-        try {
-          const productData = await getProduct(data.productId);
-          setProduct(productData);
-        } catch (productErr) {
-          console.error('Failed to fetch product:', productErr);
-        }
       } catch (err) {
         const error = err as Error;
         setError(error.message);
@@ -68,7 +73,7 @@ export function CheckoutPage() {
     }
     
     fetchReservation();
-  }, [reservationId, navigate]);
+  }, [reservationId, navigate, isLoggedIn]);
   
   // Handle timer expiration
   useEffect(() => {
@@ -169,7 +174,7 @@ export function CheckoutPage() {
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Product</span>
-                    <span className="font-medium">{product?.name || 'Loading...'}</span>
+                    <span className="font-medium">{reservation.product?.name || 'Loading...'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Quantity</span>
