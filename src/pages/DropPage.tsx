@@ -11,7 +11,7 @@ import { useStockPolling } from '../hooks/useStockPolling';
 import { useReservation } from '../hooks/useReservation';
 import type { Product } from '../types/product';
 
- export function DropPage() {
+export function DropPage() {
   const navigate = useNavigate();
   
   // State for all products
